@@ -17,7 +17,7 @@
 	<property name="mappoint.stubs.classes.dir" value="${output}/mappoint-stubs-classes"/>
 	<property name="geocode.stubs.dist.dir" value="${output}/geocode-stubs-dist"/>
 	<property name="webapp" value="${output}/${war.file}"/>
-	<property name="toWebServer" value="${output}/bmsStatic"/>
+	<property name="toWebServer" value="${output}/devops"/>
 	<property name="web-inf" value="${webapp}/WEB-INF"/>
 	<property name="classes" value="${web-inf}/classes"/>
 	<property name="resources" value="${classes}/resources"/>
@@ -43,11 +43,7 @@
 		<mkdir dir="${web-inf}"/>
 		<mkdir dir="${classes}"/>
 		<mkdir dir="${resources}"/>
-		<delete file="${res}/beans.xml"/>
-		<copy file="${res}/beans.xml.template" tofile="${res}/beans.xml"/>
-		<replace
-    	    file="${res}/beans.xml"
-    		replacefilterfile="build.properties"/>
+		
 	</target>
 
 	<!-- This target is used to generate the stubs for accessing geocoderUS US WebService via SOAP -->
@@ -107,25 +103,6 @@
 			<fileset dir="${web}">
 			</fileset>
 		</copy>
-		<copy todir="${classes}">
-			<fileset dir="${res}">
-			</fileset>
-		</copy>
-		<copy todir="${resources}">
-			<fileset dir="${properties}">
-				<exclude name="${log.file}"/>
-			</fileset>
-		</copy>
-		<copy file="${properties}/${log.file}" tofile="${classes}/${log.file}"/>
-       <replaceregexp match="jndi.name.placeholder" replace="${jndi.local}" byline="true">
-            <fileset dir="${resources}" includes="ServerConfig.properties" />
-        </replaceregexp>
-        <replaceregexp match="jndi.name.placeholder" replace="${jndi.local}" byline="true">
-            <fileset dir="${web-inf}" includes="openq-servlet.xml" />
-        </replaceregexp>
-        <replaceregexp match="welcome.file.placeholder" replace="${welcome.file.local}" byline="true">
-            <fileset dir="${web-inf}" includes="web.xml" />
-        </replaceregexp>
 	</target>
 
 	<target name="copy-resources-warForProd" depends="clean, init">
@@ -147,27 +124,8 @@
 				<exclude name="*.jsp"/>
 				<exclude name="*.jspf"/>
 				<exclude name="**/WEB-INF/**" />
-			</fileset>
+			</fileset> 
 		</copy>
-		<copy todir="${classes}">
-			<fileset dir="${res}">
-			</fileset>
-		</copy>
-		<copy todir="${resources}">
-			<fileset dir="${properties}">
-				<exclude name="${log.file}"/>
-			</fileset>
-		</copy>
-		<copy file="${properties}/${log.file}" tofile="${classes}/${log.file}"/>
-        <replaceregexp match="jndi.name.placeholder" replace="${jndi.prod}" byline="true">
-            <fileset dir="${resources}" includes="ServerConfig.properties" />
-        </replaceregexp>
-        <replaceregexp match="jndi.name.placeholder" replace="${jndi.prod}" byline="true">
-            <fileset dir="${web-inf}" includes="openq-servlet.xml" />
-        </replaceregexp>
-        <replaceregexp match="welcome.file.placeholder" replace="${welcome.file.prod}" byline="true">
-            <fileset dir="${web-inf}" includes="web.xml" />
-        </replaceregexp>
 	</target>
 	<target name="warForProd" depends="copy-resources-warForProd, compileOnly, updateSVNRevision">
 		<war destfile="${output}/${war.file}.war" webxml="${web}/WEB-INF/web.xml">
