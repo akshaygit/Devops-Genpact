@@ -39,7 +39,7 @@
 	</target>
 
 	<target name="init">
-		<mkdir dir="${webapp}"/>
+
 		<mkdir dir="${web-inf}"/>
 		<mkdir dir="${classes}"/>
 		<mkdir dir="${resources}"/>
@@ -107,7 +107,7 @@
 
 	<target name="copy-resources-warForProd" depends="clean, init">
 		<echo>custom is set to ${custom}</echo>
-		<mkdir dir="${toWebServer}"/>
+
 		<copy todir="C:\Program Files\Apache Software Foundation\Tomcat 6.0\webapps\docs\del">
 			<fileset dir="${web}">
 				<include name="*.jsp"/>
