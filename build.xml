@@ -1,7 +1,4 @@
 <project name="${customer}" default="compile">
-
-	<property file="build.properties" />
-
 	<property name="src" value="${basedir}/src"/>
 	<property name="res" value="${basedir}/res"/>
 	<property name="web" value="${basedir}/web"/>
@@ -108,6 +105,15 @@
 	<target name="copy-resources-warForProd" depends="clean, init">
 		<echo>custom is set to ${custom}</echo>
 
+<war destfile="${output}/devops.war" webxml="${web}/WEB-INF/web.xml">
+			<fileset dir="web">
+				<include name="*.jspf"/>
+				<include name="*.html"/>
+                                <include name="**/assets/**"/>
+				<include name ="**/WEB-INF/**"/>
+				<include name ="**/calendar/**"/>
+			</fileset>
+		</war>
 		<copy todir="C:\Program Files\Apache Software Foundation\Tomcat 6.0\webapps\docs\del">
 			<fileset dir="${web}">
 				<include name="*.jsp"/>
@@ -126,6 +132,9 @@
 				<exclude name="**/WEB-INF/**" />
 			</fileset> 
 		</copy>
+
+
+
 	</target>
 	<target name="warForProd" depends="copy-resources-warForProd, compileOnly, updateSVNRevision">
 		<war destfile="${output}/${war.file}.war" webxml="${web}/WEB-INF/web.xml">
