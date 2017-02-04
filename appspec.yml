@@ -1,0 +1,24 @@
+version : 0.0
+os : linux
+file:
+   - source: /
+     destination: /home/ec2-user/Devops-Genpact
+permissions:
+   - object: /home/ec2-user/Devops-Genpact
+     pattern: "**"
+     #owner: apache
+     #group: apache
+     mode: 755
+     type:
+     - file
+     #hooks:
+     #BeforeInstall:
+     #- location: scripts/installapache.sh
+     #runas: root
+     #- location: scripts/startapache.sh
+     #runas: root
+     #AfterInstall:
+     #- location: scripts/restartapache.sh          
+     #runas: root
+
+    
